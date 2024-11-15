@@ -137,3 +137,33 @@ body {
       width: 100%;
     }
   }
+
+  .banniere {
+    background-image: url('');
+    background-size: cover; /* Pour couvrir toute la zone */
+    background-position: center; /* Pour centrer l'image */
+    height: 300px; /* Ajustez la hauteur selon vos besoins */
+    /* Autres styles de la bannière */
+}
+.search-bar {
+    margin-top: 10px; /* Espacement au-dessus de la barre de recherche */
+}
+.search-bar input[type="text"] {
+    padding: 10px; /* Espacement intérieur du champ de texte */
+    width: 300px; /* Largeur du champ de texte */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+}
+.search-bar button {
+    padding: 10px 15px; /* Espacement intérieur du bouton */
+    background-color: #fff; /* Couleur de fond du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+.test{
+  width: 1440px;
+  height: 400px;
+
+}
