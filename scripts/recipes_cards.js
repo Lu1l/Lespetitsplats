@@ -2,7 +2,16 @@
 
         const recipeContainer = document.querySelector('.recipe-container');
 
+        let rowDiv; // Déclaration d'une variable pour le conteneur de ligne
+        let cardCount = 0; // Compteur de cartes
+
         recipes.forEach(recipe => {
+            if (cardCount % 4 === 0) { // Créer un nouveau conteneur de ligne tous les 4 cartes
+                rowDiv = document.createElement('div');
+                rowDiv.className = 'row'; // Classe pour le conteneur de ligne
+                recipeContainer.appendChild(rowDiv);
+            }
+
             // Créer la carte
             const colDiv = document.createElement('div');
             colDiv.className = 'col';
@@ -52,8 +61,8 @@
             cardDiv.appendChild(img);
             cardDiv.appendChild(cardBody);
             colDiv.appendChild(cardDiv);
-            recipeContainer.appendChild(colDiv);
-            return recipeContainer;
+            rowDiv.appendChild(colDiv); // Ajouter la carte au conteneur de ligne
+            cardCount++; // Incrémenter le compteur
         });
 
 

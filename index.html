@@ -14,31 +14,41 @@
   </head>
   <body>
     <div class="container">
-      
-        <div class="text-center">
-          <div class="position-relative">
-            <img src="https://images.unsplash.com/photo-1626509653291-18d9a934b9db?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Description de l'image" class="img-fluid  mb-4">
-             
-             <form class="form-inline justify-content-center">
-              <input type="text" class="form-control position-absolute top-50 start-50 translate-middle" placeholder="Recherche...">
-              <button class="btn btn-primary btn-lg position-absolute" type="submit">Rechercher</button>
+      <div class="row my-4">
+        <div class="col-12">
+          <form class="d-flex btn-group" id="searchBar">
+            <input
+              class="
+                form-control
+                rounded-start
+                text-dark
+                custom-placeholder-grey
+              "
+              id="search-bar"
+              type="search"
+              placeholder="rechercher un ingredient, un ustensile ou une recette"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-light rounded-end"
+              id="search-form"
+              type="submit"
+            >
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
           </form>
-          </div>
-         
-      </div>
-      
-         
-          
-    
-        <div class="container">
-          <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-              <div class="recipe-container"></div>
-              </div>
-            </div> 
-          </div>
+        </div>
       </div>
     </div>
+    <div class="container">
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4" id="recipe-container">
+
+      </div>
+    </div>
+      
+    
+   
     
     <script src="scripts/index.js"></script>
     <!-- <script src="scripts/recipes_cards.js"></script> -->
@@ -46,3 +56,5 @@
     
   </body>
 </html>
+
+
