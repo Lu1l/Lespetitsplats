@@ -84,35 +84,17 @@ function recipeCardGenerator(recipe, container) {
   container.appendChild(colDiv);
 }
 
-function filterRecipes(searchTerm) {
-  if (!searchTerm.trim()) {
-    displayData(recipes);
-    return;
-  }
+function filterRecipes() {
+    const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+    const selectedCategory = document.getElementById('categoryDropdown').value;
 
-  const searchTerms = searchTerm.toLowerCase().split(' ').filter(term => term.length > 0);
-  
-  const filteredRecipes = recipes.filter(recipe => {
-  
-    const nameMatch = recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    // Recherche dans les ingrédients
-    const ingredientMatch = recipe.ingredients.some(ingredient =>
-      searchTerms.some(term => 
-        ingredient.ingredient.toLowerCase().includes(term)
-      )
-    );
-    
-    const descriptionMatch = recipe.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    return nameMatch || ingredientMatch || descriptionMatch;
-  });
+    const filteredRecipes = recipes.filter(recipe => {
+        const matchesSearch = recipe.name.toLowerCase().includes(searchQuery);
+        const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+    });
 
-  // Éliminer les doublons
-  const uniqueRecipes = Array.from(new Set(filteredRecipes.map(recipe => recipe.name)))
-    .map(name => filteredRecipes.find(recipe => recipe.name === name));
-
-  displayData(uniqueRecipes);
+    displayRecipes(filteredRecipes);
 }
 
 async function init() {
@@ -128,18 +110,18 @@ async function init() {
   populateDropdowns(recipes);
 }
 
-// Nouvelle fonction pour remplir les dropdowns
+
 function populateDropdowns(recipes) {
   const ingredientsDropdown = document.querySelector('.dropdown-menu:nth-of-type(1)');
   const appareilsDropdown = document.getElementById('Appareils_dropdown');
   const ustensilesDropdown = document.getElementById('Ustensiles_drowdown');
 
-  // Vider les dropdowns
+
   ingredientsDropdown.innerHTML = '';
   appareilsDropdown.innerHTML = '';
   ustensilesDropdown.innerHTML = '';
 
-  // Collecter les éléments uniques
+
   const ingredientsSet = new Set();
   const appareilsSet = new Set();
   const ustensilesSet = new Set();
@@ -154,7 +136,7 @@ function populateDropdowns(recipes) {
     }
   });
 
-  // Créer les éléments de dropdown avec gestion des clics
+
   function createDropdownItem(item, type) {
     const li = document.createElement('li');
     const a = document.createElement('a');
@@ -164,7 +146,7 @@ function populateDropdowns(recipes) {
     a.dataset.type = type;
     a.dataset.value = item;
     
-    // Ajouter un gestionnaire de clic pour filtrer les recettes
+ 
     a.addEventListener('click', (e) => {
       e.preventDefault();
       const selectedType = e.target.dataset.type;
@@ -191,10 +173,10 @@ function populateDropdowns(recipes) {
           break;
       }
       
-      // Afficher les recettes filtrées
+    
       displayData(filteredRecipes);
       
-      // Mettre à jour l'apparence de l'élément sélectionné
+  
       document.querySelectorAll('.dropdown-item').forEach(item => {
         item.classList.remove('active');
       });
@@ -205,7 +187,7 @@ function populateDropdowns(recipes) {
     return li;
   }
 
-  // Remplir les dropdowns
+  
   ingredientsSet.forEach(ingredient => {
     ingredientsDropdown.appendChild(createDropdownItem(ingredient, 'ingredient'));
   });
@@ -218,7 +200,7 @@ function populateDropdowns(recipes) {
     ustensilesDropdown.appendChild(createDropdownItem(ustensile, 'ustensil')); // Assurez-vous d'utiliser le Set pour éviter les doublons
   });
 
-  // Ajouter bouton de réinitialisation pour chaque dropdown
+
   const dropdowns = [
     { element: ingredientsDropdown, type: 'ingredients' },
     { element: appareilsDropdown, type: 'appareils' },
@@ -243,7 +225,7 @@ function populateDropdowns(recipes) {
   });
 }
 
-// Gestionnaires d'événements
+
 document.addEventListener("DOMContentLoaded", () => {
   init();
 
