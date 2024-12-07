@@ -71,6 +71,7 @@ function recipeCardGenerator(recipe, container) {
     ingredientDiv.appendChild(quantity);
     ingredientsList.appendChild(ingredientDiv);
   });
+  
 
   cardBody.appendChild(recipeName);
   cardBody.appendChild(description);
@@ -120,6 +121,55 @@ async function init() {
   
   recipes = loadedRecipes;
   displayData(recipes);
+  
+  populateDropdowns(recipes);
+}
+
+// Nouvelle fonction pour remplir les dropdowns
+function populateDropdowns(recipes) {
+  const ingredientsDropdown = document.querySelector('.dropdown-menu:nth-of-type(1)');
+  const appareilsDropdown = document.getElementById('Appareils_dropdown');
+  const ustensilesDropdown = document.getElementById('Ustensiles_drowdown');
+
+  const ingredientsSet = new Set();
+  const appareilsSet = new Set();
+  const ustensilesSet = new Set();
+
+  recipes.forEach(recipe => {
+    recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient.ingredient));
+    // Supposons que les appareils et ustensiles sont des propriétés de chaque recette
+    console.log("Recette:",recipe)
+    if (recipe.appliance) {
+      
+      appareilsSet.add(recipe.appliance)
+
+    }
+    if (recipe.ustensils) {
+      ustensilesSet.add(recipe.ustensils)
+    }
+  });
+  console.log("appareil Set",appareilsSet)
+
+  // Remplissage des dropdowns
+  ingredientsSet.forEach(ingredient => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a class="dropdown-item" href="#">${ingredient}</a>`;
+    ingredientsDropdown.appendChild(li);
+  });
+
+  appareilsSet.forEach(appliance => {
+    console.log("aplliance",appliance);
+    const li = document.createElement('li');
+    li.innerHTML = `<a class="dropdown-item" href="#">${appliance}</a>`;
+    console.log("Dropdown",appareilsDropdown)
+    appareilsDropdown.appendChild(li);
+  });
+
+  ustensilesSet.forEach(ustensile => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a class="dropdown-item" href="#">${ustensile}</a>`;
+    ustensilesDropdown.appendChild(li);
+  });
 }
 
 // Gestionnaires d'événements
