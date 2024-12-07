@@ -103,13 +103,16 @@ function filterRecipes(searchTerm) {
       )
     );
     
-   
     const descriptionMatch = recipe.description.toLowerCase().includes(searchTerm.toLowerCase());
     
     return nameMatch || ingredientMatch || descriptionMatch;
   });
 
-  displayData(filteredRecipes);
+  // Éliminer les doublons
+  const uniqueRecipes = Array.from(new Set(filteredRecipes.map(recipe => recipe.name)))
+    .map(name => filteredRecipes.find(recipe => recipe.name === name));
+
+  displayData(uniqueRecipes);
 }
 
 async function init() {
@@ -131,44 +134,112 @@ function populateDropdowns(recipes) {
   const appareilsDropdown = document.getElementById('Appareils_dropdown');
   const ustensilesDropdown = document.getElementById('Ustensiles_drowdown');
 
+  // Vider les dropdowns
+  ingredientsDropdown.innerHTML = '';
+  appareilsDropdown.innerHTML = '';
+  ustensilesDropdown.innerHTML = '';
+
+  // Collecter les éléments uniques
   const ingredientsSet = new Set();
   const appareilsSet = new Set();
   const ustensilesSet = new Set();
 
   recipes.forEach(recipe => {
     recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient.ingredient));
-    // Supposons que les appareils et ustensiles sont des propriétés de chaque recette
-    console.log("Recette:",recipe)
     if (recipe.appliance) {
-      
-      appareilsSet.add(recipe.appliance)
-
+      appareilsSet.add(recipe.appliance);
     }
     if (recipe.ustensils) {
-      ustensilesSet.add(recipe.ustensils)
+      recipe.ustensils.forEach(ustensil => ustensilesSet.add(ustensil)); // Utiliser un Set pour éviter les doublons
     }
   });
-  console.log("appareil Set",appareilsSet)
 
-  // Remplissage des dropdowns
-  ingredientsSet.forEach(ingredient => {
+  // Créer les éléments de dropdown avec gestion des clics
+  function createDropdownItem(item, type) {
     const li = document.createElement('li');
-    li.innerHTML = `<a class="dropdown-item" href="#">${ingredient}</a>`;
-    ingredientsDropdown.appendChild(li);
+    const a = document.createElement('a');
+    a.className = 'dropdown-item';
+    a.href = '#';
+    a.textContent = item;
+    a.dataset.type = type;
+    a.dataset.value = item;
+    
+    // Ajouter un gestionnaire de clic pour filtrer les recettes
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedType = e.target.dataset.type;
+      const selectedValue = e.target.dataset.value;
+      
+      // Filtrer les recettes selon la sélection
+      let filteredRecipes;
+      
+      switch(selectedType) {
+        case 'ingredient':
+          filteredRecipes = recipes.filter(recipe => 
+            recipe.ingredients.some(ing => ing.ingredient === selectedValue)
+          );
+          break;
+        case 'appliance':
+          filteredRecipes = recipes.filter(recipe => 
+            recipe.appliance === selectedValue
+          );
+          break;
+        case 'ustensil':
+          filteredRecipes = recipes.filter(recipe => 
+            recipe.ustensils && recipe.ustensils.includes(selectedValue)
+          );
+          break;
+      }
+      
+      // Afficher les recettes filtrées
+      displayData(filteredRecipes);
+      
+      // Mettre à jour l'apparence de l'élément sélectionné
+      document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      e.target.classList.add('active');
+    });
+    
+    li.appendChild(a);
+    return li;
+  }
+
+  // Remplir les dropdowns
+  ingredientsSet.forEach(ingredient => {
+    ingredientsDropdown.appendChild(createDropdownItem(ingredient, 'ingredient'));
   });
 
   appareilsSet.forEach(appliance => {
-    console.log("aplliance",appliance);
-    const li = document.createElement('li');
-    li.innerHTML = `<a class="dropdown-item" href="#">${appliance}</a>`;
-    console.log("Dropdown",appareilsDropdown)
-    appareilsDropdown.appendChild(li);
+    appareilsDropdown.appendChild(createDropdownItem(appliance, 'appliance'));
   });
 
   ustensilesSet.forEach(ustensile => {
-    const li = document.createElement('li');
-    li.innerHTML = `<a class="dropdown-item" href="#">${ustensile}</a>`;
-    ustensilesDropdown.appendChild(li);
+    ustensilesDropdown.appendChild(createDropdownItem(ustensile, 'ustensil')); // Assurez-vous d'utiliser le Set pour éviter les doublons
+  });
+
+  // Ajouter bouton de réinitialisation pour chaque dropdown
+  const dropdowns = [
+    { element: ingredientsDropdown, type: 'ingredients' },
+    { element: appareilsDropdown, type: 'appareils' },
+    { element: ustensilesDropdown, type: 'ustensiles' }
+  ];
+
+  dropdowns.forEach(({ element, type }) => {
+    const resetLi = document.createElement('li');
+    const resetButton = document.createElement('button');
+    resetButton.className = 'dropdown-item text-primary';
+    resetButton.textContent = 'Réinitialiser';
+    
+    resetButton.addEventListener('click', () => {
+      displayData(recipes); // Afficher toutes les recettes
+      document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('active');
+      });
+    });
+    
+    resetLi.appendChild(resetButton);
+    element.appendChild(resetLi);
   });
 }
 
