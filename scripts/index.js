@@ -350,6 +350,7 @@ async function init() {
 document.addEventListener("DOMContentLoaded", () => {
   init();
 
+  
   const searchForm = document.querySelector('#search-form');
   const searchBarInput = document.querySelector('#search-bar');
 
