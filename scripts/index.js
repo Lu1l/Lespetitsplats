@@ -69,6 +69,11 @@ function displayData(filteredRecipes) {
   const recipeSection = document.querySelector('#recipe-container');
   recipeSection.innerHTML = '';
   
+  const countElement = document.querySelector('#count-recipes');
+  if (countElement) {
+    countElement.textContent = `Nombre de recettes: ${filteredRecipes.length}`;
+  }
+  
   if (filteredRecipes.length === 0) {
     recipeSection.innerHTML = '<div class="alert alert-info">Aucune recette trouvée</div>';
     return;

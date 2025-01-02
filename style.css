@@ -181,3 +181,7 @@ body {
 .card-body {
   flex-grow: 1;
 }
+
+.container{
+  padding: 0;
+}
