@@ -190,7 +190,7 @@ function updateFilterTags() {
   const filterTagsContainer = document.querySelector('#filter-tags') || createFilterTagsContainer();
   const paginationContainer = document.querySelector('#pagination-container');
 
-  // Assurez-vous que le conteneur des tags est placé sous le conteneur de pagination
+  
   if (!filterTagsContainer.parentNode) {
     paginationContainer.after(filterTagsContainer);
   }
@@ -213,7 +213,7 @@ function updateFilterTags() {
     return tag;
   }
 
-  // Ajoutez les tags sous les boutons de pagination
+
   activeFilters.ingredients.forEach(ingredient => {
     filterTagsContainer.appendChild(createTag(ingredient, 'ingredients'));
   });
@@ -232,7 +232,7 @@ function createFilterTagsContainer() {
   container.id = 'filter-tags';
   container.className = 'mt-3';
   
-  // Insérer le conteneur des tags sous la div d-flex gap-2
+ 
   const buttonContainer = document.querySelector('.d-flex.gap-2');
   buttonContainer.after(container);
   

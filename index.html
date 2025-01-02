@@ -10,27 +10,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body>
-    <div class="container">
+    <div class="container bg-light">
    
       <div class="row my-4">
         <div class="col-12">
      
-          <form class="d-flex mb-3" id="searchBar">
-            <input
-              class="form-control rounded-start text-dark"
-              id="search-bar"
-              type="search"
-              placeholder="Rechercher un ingrédient, un ustensile ou une recette"
-              aria-label="Recherche"
-            />
-            <button
-              class="btn btn-light rounded-end"
-              id="search-form"
-              type="submit"
-            >
-              <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
+          <div class="position-relative">
+          <!--<h2 class="d-flex mb-3 position-absolute top-50 start-50 translate-middle" style="z-index: 1;"> Cherchez parmi plus de 1500 recettes du quotidien, simple et délicieuses</h2> -->
+            
+
+            <img src="https://images.unsplash.com/photo-1626509653291-18d9a934b9db?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image sous la barre de recherche" style="width: 100%; height: 667px;">
+            <form class="d-flex mb-3 position-absolute top-50 start-50 translate-middle" id="searchBar">
+              <input
+                class="form-control rounded-start text-dark"
+                id="search-bar"
+                type="search"
+                placeholder="Rechercher un ingrédient, un ustensile ou une recette"
+                aria-label="Recherche"
+                style="width: 600px;"
+              />
+              <button
+                class="btn btn-light rounded-end"
+                id="search-form"
+                type="submit"
+              >
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
 
        
           <div class="d-flex gap-2">
@@ -60,12 +67,13 @@
              
               </ul>
             </div>
+            <h3 id="count-recipes" class="text-end">plus de 1500</h3>
           </div>
         </div>
       </div>
 
     
-      <div class="row">
+      <div class="row ">
         <div class="col-12">
           <div id="recipe-container" class="card-container">
        
