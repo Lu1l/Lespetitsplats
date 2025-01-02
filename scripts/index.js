@@ -64,6 +64,9 @@ function displayData(filteredRecipes) {
   const recipeSection = document.querySelector('#recipe-container');
   recipeSection.innerHTML = '';
   
+  const countRecipes = document.querySelector('#count-recipes') || createCountRecipesElement();
+  countRecipes.textContent = `Nombre de recettes: ${filteredRecipes.length}`;
+  
   if (filteredRecipes.length === 0) {
     recipeSection.innerHTML = '<div class="alert alert-info">Aucune recette trouvée</div>';
     return;
@@ -369,3 +372,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 300);
   });
 });
+
+function createCountRecipesElement() {
+  const countElement = document.createElement('div');
+  countElement.id = 'count-recipes';
+  countElement.className = 'mt-3';
+  document.querySelector('#recipe-container').before(countElement);
+  return countElement;
+}
+
+function handleSearch(event) {
+  const query = event.target.value.trim();
+  
+  if (query.length < 3) {
+    displayData(recipes);
+    return;
+  }
+
+  const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(query.toLowerCase()));
+  displayData(filteredRecipes);
+}
