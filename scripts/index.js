@@ -391,3 +391,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 300);
   });
 });
+
+function handleSearch(event) {
+  const query = event.target.value.trim();
+  
+  // Vérification du nombre minimum de caractères
+  if (query.length < 3) {
+    displayData(recipes); // Affiche toutes les recettes si moins de 3 caractères
+    return;
+  }
+
+  // Filtrage des recettes uniquement si la requête a 3 caractères ou plus
+  const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(query.toLowerCase()));
+  displayData(filteredRecipes);
+}
+
+// Événement de recherche
+document.querySelector('#search-bar').addEventListener('submit', function(event) {
+  event.preventDefault(); // Empêche le rechargement de la page
+  handleSearch();
+});
+
+function handleSearch() {
+  const query = document.querySelector('#search-bar input').value.trim();
+  
+  // Vérification du nombre minimum de caractères
+  if (query.length < 3) {
+    displayData(recipes); // Affiche toutes les recettes si moins de 3 caractères
+    return;
+  }
+
+  // Filtrage des recettes uniquement si la requête a 3 caractères ou plus
+  const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(query.toLowerCase()));
+  displayData(filteredRecipes);
+}
+
+document.getElementById('searchBar').addEventListener('submit', function(event) {
+    const searchInput = document.getElementById('search-bar').value;
+    if (searchInput.length < 3) {
+        event.preventDefault(); // Empêche l'envoi du formulaire
+        alert('Veuillez entrer au moins 3 caractères pour la recherche.'); // Alerte à l'utilisateur
+    }
+});
