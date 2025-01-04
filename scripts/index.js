@@ -42,7 +42,7 @@ function recipeCardGenerator(recipe, container) {
         ${recipe.time} min
       </div>
       <div class="card-header bg-light d-flex justify-content-between align-items-center">
-        <h5 class="card-title mb-0">${recipe.name}</h5>
+        <h5 class="card-title mb-0"><strong>${recipe.name}</strong></h5>
       </div>
       <div class="card-body">
         <div class="row">
@@ -71,7 +71,7 @@ function displayData(filteredRecipes) {
   
   const countElement = document.querySelector('#count-recipes');
   if (countElement) {
-    countElement.textContent = `Nombre de recettes: ${filteredRecipes.length}`;
+    countElement.textContent = ` ${filteredRecipes.length} recettes`;
   }
   
   if (filteredRecipes.length === 0) {
@@ -387,7 +387,11 @@ document.addEventListener("DOMContentLoaded", () => {
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
       activeFilters.search = e.target.value;
-      applyFilters();
+      if (activeFilters.search.length >= 3) {
+        applyFilters();
+      } else {
+        displayData(recipes);
+      }
     }, 300);
   });
 });
