@@ -384,8 +384,8 @@ function createCountRecipesElement() {
 function handleSearch(event) {
   const query = event.target.value.trim();
   
-  if (query.length < 3) {
-    displayData(recipes);
+  if (query.length <3) {
+    
     return;
   }
 
