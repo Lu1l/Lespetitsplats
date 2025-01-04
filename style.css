@@ -181,3 +181,19 @@ body {
 .card-body {
   flex-grow: 1;
 }
+#search-form{
+  background-color: black;
+  color: white;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#search-bar{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.position-relative{
+  width: 100%; 
+  height: 667px;
+}

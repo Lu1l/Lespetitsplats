@@ -65,7 +65,7 @@ function displayData(filteredRecipes) {
   recipeSection.innerHTML = '';
   
   const countRecipes = document.querySelector('#count-recipes') || createCountRecipesElement();
-  countRecipes.textContent = `Nombre de recettes: ${filteredRecipes.length}`;
+  countRecipes.textContent = `${filteredRecipes.length} recettes`;
   
   if (filteredRecipes.length === 0) {
     recipeSection.innerHTML = '<div class="alert alert-info">Aucune recette trouvée</div>';
@@ -366,8 +366,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let debounceTimeout;
   searchBarInput.addEventListener('input', (e) => {
     clearTimeout(debounceTimeout);
+    const query = e.target.value;
+
+    // Limiter la recherche à trois caractères minimum
+    if (query.length < 3) {
+      activeFilters.search = ''; // Réinitialiser le filtre de recherche
+      displayData(recipes); // Afficher toutes les recettes
+      return;
+    }
+
     debounceTimeout = setTimeout(() => {
-      activeFilters.search = e.target.value;
+      activeFilters.search = query;
       applyFilters();
     }, 300);
   });
@@ -381,14 +390,3 @@ function createCountRecipesElement() {
   return countElement;
 }
 
-function handleSearch(event) {
-  const query = event.target.value.trim();
-  
-  if (query.length <3) {
-    
-    return;
-  }
-
-  const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(query.toLowerCase()));
-  displayData(filteredRecipes);
-}

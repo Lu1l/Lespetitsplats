@@ -16,23 +16,21 @@
         <div class="col-12">
      
           <div class="position-relative">
-          <!--<h2 class="d-flex mb-3 position-absolute top-50 start-50 translate-middle" style="z-index: 1;"> Cherchez parmi plus de 1500 recettes du quotidien, simple et délicieuses</h2> -->
-            
-
             <img src="https://images.unsplash.com/photo-1626509653291-18d9a934b9db?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image sous la barre de recherche" style="width: 100%; height: 667px;">
-            <form class="d-flex mb-3 position-absolute top-50 start-50 translate-middle" id="searchBar">
+            <form class="d-flex mb-3 position-absolute top-50 start-50 translate-middle" id="searchBar" style="width: 600px;">
               <input
                 class="form-control rounded-start text-dark"
                 id="search-bar"
                 type="search"
                 placeholder="Rechercher un ingrédient, un ustensile ou une recette"
                 aria-label="Recherche"
-                style="width: 600px;"
+                minlength="3"
+                required
               />
               <button
                 class="btn btn-light rounded-end"
                 id="search-form"
-                type="submit"
+                type="submit"              
               >
                 <i class="fas fa-search" aria-hidden="true"></i>
               </button>
@@ -40,9 +38,9 @@
           </div>
 
        
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2" style="margin-top: 20px;">
             <div class="btn-group">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" style="background-color: white; color: black; margin-top: 2px;">
                 Ingrédients
               </button>
               <ul id="ingredients-dropdown" class="dropdown-menu">
@@ -51,7 +49,7 @@
             </div>
 
             <div class="btn-group">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" style="background-color: white; color: black; margin-top: 2px;">
                 Appareils
               </button>
               <ul id="Appareils_dropdown" class="dropdown-menu">
@@ -60,14 +58,16 @@
             </div>
 
             <div class="btn-group">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" style="background-color: white; color: black; margin-top: 2px;">
                 Ustensiles
               </button>
               <ul id="Ustensiles_drowdown" class="dropdown-menu">
              
               </ul>
             </div>
-            <h3 id="count-recipes" class="text-end">plus de 1500</h3>
+            <div class="d-flex justify-content-between" style="margin-top: 20px;">
+              <h3 id="count-recipes" class="text-end"></h3>
+            </div>
           </div>
         </div>
       </div>
@@ -88,7 +88,6 @@
     </div>
     
     
-    <script src="scripts/recipes.js"></script>
     <script src="scripts/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
