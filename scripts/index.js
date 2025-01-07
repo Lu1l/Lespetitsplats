@@ -356,6 +356,31 @@ function populateDropdowns(recipes) {
     resetLi.appendChild(resetButton);
     element.appendChild(resetLi);
   }
+
+  // Fonction pour ajouter une barre de recherche à un dropdown
+  function addSearchBar(dropdown, placeholder) {
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = placeholder;
+    searchInput.className = 'form-control mb-2';
+    
+    // Ajouter la barre de recherche en haut du dropdown
+    dropdown.insertBefore(searchInput, dropdown.firstChild);
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const items = dropdown.querySelectorAll('.dropdown-item');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    });
+  }
+
+  // Ajout de la barre de recherche pour chaque dropdown en haut
+  addSearchBar(ingredientsDropdown, 'Rechercher un ingrédient...');
+  addSearchBar(appareilsDropdown, 'Rechercher un appareil...');
+  addSearchBar(ustensilesDropdown, 'Rechercher un ustensile...');
 }
 
 async function init() {
