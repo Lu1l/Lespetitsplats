@@ -36,9 +36,8 @@ function recipeCardGenerator(recipe, container) {
       <div class="card-body">
         <div class="row">
           <div class="col-12">
-          
             <h6>Instructions:</h6>
-            <p class="card-text">${recipe.description}</p>
+            <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; margin-bottom:15px">${recipe.description}</p>
           </div>
           <div class="col">
             <h6>Ingrédients:</h6>
@@ -72,20 +71,16 @@ function displayData(filteredRecipes) {
     return;
   }
 
- 
   const startIndex = (currentPage - 1) * recipesPerPage;
   const endIndex = startIndex + recipesPerPage;
   const paginatedRecipes = filteredRecipes.slice(startIndex, endIndex);
 
- 
   const row = document.createElement('div');
   row.className = 'row';
-
 
   paginatedRecipes.forEach(recipe => recipeCardGenerator(recipe, row));
   
   recipeSection.appendChild(row);
-
   
   createPaginationControls(filteredRecipes);
 }
@@ -95,7 +90,6 @@ function createPaginationControls(filteredRecipes) {
   paginationContainer.innerHTML = '';
 
   const totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
-
 
   const prevButton = document.createElement('button');
   prevButton.className = 'btn btn-outline-primary me-2';
@@ -108,7 +102,6 @@ function createPaginationControls(filteredRecipes) {
     }
   });
 
-  
   const nextButton = document.createElement('button');
   nextButton.className = 'btn btn-outline-primary';
   nextButton.textContent = 'Suivant';
@@ -120,11 +113,9 @@ function createPaginationControls(filteredRecipes) {
     }
   });
 
-  
   const pageInfo = document.createElement('span');
   pageInfo.className = 'mx-2';
   pageInfo.textContent = `Page ${currentPage} sur ${totalPages}`;
-
 
   paginationContainer.appendChild(prevButton);
   paginationContainer.appendChild(pageInfo);
@@ -140,12 +131,9 @@ function createPaginationContainer() {
 }
 
 function applyFilters() {
-
   currentPage = 1;
-
   let filteredRecipes = recipes;
 
- 
   if (activeFilters.search) {
     const searchQuery = activeFilters.search.toLowerCase();
     filteredRecipes = filteredRecipes.filter(recipe => {
@@ -158,7 +146,6 @@ function applyFilters() {
     });
   }
 
- 
   if (activeFilters.ingredients.size > 0) {
     filteredRecipes = filteredRecipes.filter(recipe =>
       [...activeFilters.ingredients].every(ingredient =>
@@ -167,7 +154,6 @@ function applyFilters() {
     );
   }
 
- 
   if (activeFilters.appliances.size > 0) {
     filteredRecipes = filteredRecipes.filter(recipe =>
       [...activeFilters.appliances].some(appliance =>
@@ -175,7 +161,6 @@ function applyFilters() {
       )
     );
   }
-
 
   if (activeFilters.ustensils.size > 0) {
     filteredRecipes = filteredRecipes.filter(recipe =>
@@ -193,7 +178,6 @@ function updateFilterTags() {
   const filterTagsContainer = document.querySelector('#filter-tags') || createFilterTagsContainer();
   const paginationContainer = document.querySelector('#pagination-container');
 
-  
   if (!filterTagsContainer.parentNode) {
     paginationContainer.after(filterTagsContainer);
   }
@@ -216,7 +200,6 @@ function updateFilterTags() {
     return tag;
   }
 
-
   activeFilters.ingredients.forEach(ingredient => {
     filterTagsContainer.appendChild(createTag(ingredient, 'ingredients'));
   });
@@ -235,7 +218,6 @@ function createFilterTagsContainer() {
   container.id = 'filter-tags';
   container.className = 'mt-3';
   
- 
   const buttonContainer = document.querySelector('.d-flex.gap-2');
   buttonContainer.after(container);
   
@@ -252,11 +234,9 @@ function populateDropdowns(recipes) {
   const appareilsDropdown = document.getElementById('Appareils_dropdown');
   const ustensilesDropdown = document.getElementById('Ustensiles_drowdown');
 
- 
   ingredientsDropdown.innerHTML = '';
   appareilsDropdown.innerHTML = '';
   ustensilesDropdown.innerHTML = '';
-
 
   const ingredientsSet = new Set();
   const appareilsSet = new Set();
@@ -275,7 +255,6 @@ function populateDropdowns(recipes) {
     a.href = '#';
     a.textContent = item;
     
-
     if (activeFilters[type].has(item)) {
       a.classList.add('active');
     }
@@ -299,7 +278,6 @@ function populateDropdowns(recipes) {
     return li;
   }
 
-  
   ingredientsSet.forEach(ingredient => {
     ingredientsDropdown.appendChild(createDropdownItem(ingredient, 'ingredients'));
   });
@@ -311,7 +289,6 @@ function populateDropdowns(recipes) {
   ustensilesSet.forEach(ustensile => {
     ustensilesDropdown.appendChild(createDropdownItem(ustensile, 'ustensils'));
   });
-
 
   const dropdowns = [
     { element: ingredientsDropdown, type: 'ingredients' },
@@ -336,6 +313,25 @@ function populateDropdowns(recipes) {
     resetLi.appendChild(resetButton);
     element.appendChild(resetLi);
   });
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Rechercher...';
+  searchInput.classList.add('form-control', 'dropdown-search');
+
+  ingredientsDropdown.prepend(searchInput);
+  appareilsDropdown.prepend(searchInput.cloneNode());
+  ustensilesDropdown.prepend(searchInput.cloneNode());
+
+  searchInput.addEventListener('input', () => {
+    const filter = searchInput.value.toLowerCase();
+    const items = ingredientsDropdown.querySelectorAll('.dropdown-item');
+
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
 }
 
 async function init() {
@@ -353,7 +349,6 @@ async function init() {
 document.addEventListener("DOMContentLoaded", () => {
   init();
 
-  
   const searchForm = document.querySelector('#search-form');
   const searchBarInput = document.querySelector('#search-bar');
 
@@ -368,10 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
     clearTimeout(debounceTimeout);
     const query = e.target.value;
 
-    // Limiter la recherche à trois caractères minimum
     if (query.length < 3) {
-      activeFilters.search = ''; // Réinitialiser le filtre de recherche
-      displayData(recipes); // Afficher toutes les recettes
+      activeFilters.search = '';
+      displayData(recipes);
       return;
     }
 
@@ -389,4 +383,3 @@ function createCountRecipesElement() {
   document.querySelector('#recipe-container').before(countElement);
   return countElement;
 }
-
