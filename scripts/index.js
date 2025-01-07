@@ -48,7 +48,7 @@ function recipeCardGenerator(recipe, container) {
         <div class="row">
           <div class="col-12">
             <h6>Instructions:</h6>
-            <p class="card-text">${recipe.description}</p>
+            <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; margin-bottom:15px">${recipe.description}</p>
           </div>
           <div class="col">
             <h6>Ingrédients:</h6>
