@@ -323,13 +323,16 @@ function populateDropdowns(recipes) {
   appareilsDropdown.prepend(searchInput.cloneNode());
   ustensilesDropdown.prepend(searchInput.cloneNode());
 
-  searchInput.addEventListener('input', () => {
-    const filter = searchInput.value.toLowerCase();
-    const items = ingredientsDropdown.querySelectorAll('.dropdown-item');
+  [ingredientsDropdown, appareilsDropdown, ustensilesDropdown].forEach(dropdown => {
+    const input = dropdown.querySelector('.dropdown-search');
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      const items = dropdown.querySelectorAll('.dropdown-item');
 
-    items.forEach(item => {
-      const text = item.textContent.toLowerCase();
-      item.style.display = text.includes(filter) ? '' : 'none';
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(filter) ? '' : 'none';
+      });
     });
   });
 }
